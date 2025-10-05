@@ -1,72 +1,74 @@
+@use '@/shared/styles/variables' as *;
+
 .header {
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: $z-sticky;
   width: 100%;
-  border-bottom: 1px solid hsl(var(--border));
-  background-color: hsl(var(--background) / 0.95);
+  border-bottom: 1px solid $color-border;
+  background-color: rgba($color-background, 0.95);
   backdrop-filter: blur(8px);
 
   @supports (backdrop-filter: blur(8px)) {
-    background-color: hsl(var(--background) / 0.6);
+    background-color: rgba($color-background, 0.6);
   }
 }
 
 .container {
-  max-width: 1280px;
+  max-width: $container-max-width;
   margin: 0 auto;
   display: flex;
-  height: 4rem;
+  height: $spacing-16;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1rem;
+  padding: 0 $spacing-4;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: $spacing-2;
 }
 
 .logoText {
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: $font-xl;
+  font-weight: $font-bold;
 }
 
 .nav {
   display: none;
   align-items: center;
-  gap: 1.5rem;
+  gap: $spacing-6;
 
-  @media (min-width: 768px) {
+  @media (min-width: $breakpoint-md) {
     display: flex;
   }
 }
 
 .navLink {
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: color 0.2s;
+  font-size: $font-sm;
+  font-weight: $font-medium;
+  transition: color $transition-base;
 
   &:hover {
-    color: hsl(var(--primary));
+    color: $color-primary;
   }
 }
 
 .navIcon {
   display: inline;
-  width: 1rem;
-  height: 1rem;
+  width: $spacing-4;
+  height: $spacing-4;
 }
 
 .userArea {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: $spacing-4;
 }
 
 .userInfo {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: $spacing-3;
 }
