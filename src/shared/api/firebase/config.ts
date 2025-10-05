@@ -1,9 +1,8 @@
-import { FirebaseApp, getApps, initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-
-import { Auth, getAuth, GoogleAuthProvider } from "firebase/auth";
-import { Firestore, getFirestore } from "firebase/firestore";
-import { Functions, getFunctions } from "firebase/functions";
+import { getAnalytics } from 'firebase/analytics';
+import { FirebaseApp, getApps, initializeApp } from 'firebase/app';
+import { Auth, GoogleAuthProvider, getAuth } from 'firebase/auth';
+import { Firestore, getFirestore } from 'firebase/firestore';
+import { Functions, getFunctions } from 'firebase/functions';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -26,7 +25,7 @@ const firebaseApp: FirebaseApp =
 // analytics는 클라이언트 사이드에서만 초기화
 let analytics = null;
 
-if (typeof window !== "undefined") {
+if (typeof window !== 'undefined') {
   analytics = getAnalytics(firebaseApp);
 }
 
@@ -38,7 +37,7 @@ const firebaseFunctions: Functions = getFunctions(firebaseApp);
 // Google Auth Provider
 const googleAuthProvider: GoogleAuthProvider = new GoogleAuthProvider();
 googleAuthProvider.setCustomParameters({
-  prompt: "select_account",
+  prompt: 'select_account',
 });
 
 // Firebase 연결 상태 확인

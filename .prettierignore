@@ -2,11 +2,15 @@
 src/components/ui/**/*
 
 # 빌드 폴더 제외
+.next/
 node_modules/
 dist/
 dist-ssr/
 dev-dist/
 build/
+
+# Next.js 자동 생성 파일
+next-env.d.ts
 
 # 설정 파일 제외
 *.config.js

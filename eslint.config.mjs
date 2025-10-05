@@ -5,6 +5,18 @@ import reactHooks from "eslint-plugin-react-hooks";
 import typescriptEslint from "typescript-eslint";
 
 export default [
+  {
+    ignores: [
+      ".next/**/*",
+      "next-env.d.ts",
+      "src/components/ui/**/*",
+      "dev-dist/**/*",
+      "dist/**/*",
+      "node_modules/**/*",
+      "**/*.config.{js,ts}",
+      "public/**/*",
+    ],
+  },
   js.configs.recommended,
   ...typescriptEslint.configs.recommended,
   {
@@ -16,14 +28,6 @@ export default [
   },
   {
     files: ["**/*.{js,jsx,ts,tsx}"],
-    ignores: [
-      "src/components/ui/**/*",
-      "dev-dist/**/*",
-      "dist/**/*",
-      "node_modules/**/*",
-      "**/*.config.{js,ts}",
-      "public/**/*",
-    ],
     plugins: {
       react,
       "react-hooks": reactHooks,
