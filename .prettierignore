@@ -1,0 +1,14 @@
+# shadcn/ui 컴포넌트 제외
+src/components/ui/**/*
+
+# 빌드 폴더 제외
+node_modules/
+dist/
+dist-ssr/
+dev-dist/
+build/
+
+# 설정 파일 제외
+*.config.js
+*.config.ts
+public/
