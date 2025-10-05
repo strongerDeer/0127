@@ -1,21 +1,39 @@
 'use client';
 
-import { isFirebaseConnected } from '@/shared/api/firebase/config';
+import { useAuth } from '@/features/auth/model/useAuth';
+import { LoginButton } from '@/features/auth/ui/LoginButton';
+import { LogoutButton } from '@/features/auth/ui/LogoutButton';
 
 export default function Home() {
-  const isConnected = isFirebaseConnected();
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className='flex min-h-screen items-center justify-center'>
+        <p className='text-lg text-gray-500'>로딩 중...</p>
+      </div>
+    );
+  }
 
   return (
-    <div className='flex min-h-screen flex-col items-center justify-center gap-4 p-8'>
-      <h1 className='text-4xl font-bold'>Firebase 연결 테스트</h1>
+    <div className='flex min-h-screen flex-col items-center justify-center gap-6 p-8'>
+      <h1 className='text-4xl font-bold'>Google 로그인 테스트</h1>
 
-      <div className={`rounded-lg p-6 ${isConnected ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-        <p className='text-xl font-semibold'>{isConnected ? '✅ Firebase 연결 성공!' : '❌ Firebase 연결 실패'}</p>
-      </div>
-
-      <div className='mt-4 text-sm text-gray-600'>
-        <p>환경 변수가 올바르게 설정되었는지 확인하세요.</p>
-      </div>
+      {user ? (
+        <div className='flex flex-col items-center gap-4'>
+          {user.photoURL && <img src={user.photoURL} alt='프로필' className='h-20 w-20 rounded-full' />}
+          <div className='text-center'>
+            <p className='text-xl font-semibold'>{user.displayName}</p>
+            <p className='text-sm text-gray-500'>{user.email}</p>
+          </div>
+          <LogoutButton />
+        </div>
+      ) : (
+        <div className='flex flex-col items-center gap-4'>
+          <p className='text-gray-600'>로그인이 필요합니다</p>
+          <LoginButton />
+        </div>
+      )}
     </div>
   );
 }

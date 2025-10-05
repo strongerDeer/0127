@@ -1,5 +1,5 @@
-# shadcn/ui 컴포넌트 제외
-src/components/ui/**/*
+# shadcn 컴포넌트 제외
+src/shadcn/**/*
 
 # 빌드 폴더 제외
 .next/

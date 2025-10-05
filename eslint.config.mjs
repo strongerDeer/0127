@@ -9,7 +9,7 @@ export default [
     ignores: [
       ".next/**/*",
       "next-env.d.ts",
-      "src/components/ui/**/*",
+      "src/shadcn/**/*",
       "dev-dist/**/*",
       "dist/**/*",
       "node_modules/**/*",
