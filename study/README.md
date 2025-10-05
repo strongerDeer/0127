@@ -182,6 +182,53 @@ describe('formatCurrency', () => {
 
 ---
 
+### 9. [Husky 설정 가이드](./09-husky-setup-guide.md)
+
+Git Hook 자동화로 코드 품질 보장하기
+
+**학습 내용:**
+
+- Husky + lint-staged 설정
+- commitlint로 커밋 메시지 검증
+- 다양한 Hook 활용 (pre-commit, commit-msg, pre-push)
+- 팀 협업을 위한 고급 설정
+
+**핵심 패턴:**
+
+```bash
+# pre-commit: 코드 품질 검증
+npx lint-staged
+
+# commit-msg: 커밋 메시지 검증
+npx commitlint --edit $1
+```
+
+---
+
+### 10. [VSCode 설정 가이드](./10-vscode-setup-guide.md)
+
+팀 전체가 동일한 개발 환경 사용하기
+
+**학습 내용:**
+
+- `.vscode/settings.json` 설정
+- 확장 프로그램 추천 시스템
+- 언어/프레임워크별 최적 설정
+- 팀 협업을 위한 워크스페이스 설정
+
+**핵심 설정:**
+
+```json
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  }
+}
+```
+
+---
+
 ## 🎯 학습 로드맵
 
 ### 1주차: 기초 설정

@@ -1,1 +1,30 @@
-npx --no -- commitlint --edit $1
+#!/bin/sh
+
+# 커밋 메시지 읽기
+commit_msg=$(cat "$1")
+
+# 형식: [gitmoji] Type: message
+# 예: 🔥 Remove: commitlint 제거
+# 예: 📝 Add: 새 기능 추가
+
+# gitmoji + 대문자 시작 Type + 콜론 체크
+if ! echo "$commit_msg" | grep -qE '^.+ [A-Z][a-z]+: .+'; then
+  echo "❌ 커밋 메시지 형식이 올바르지 않습니다."
+  echo ""
+  echo "올바른 형식: [gitmoji] Type: message"
+  echo "예시:"
+  echo "  📝 Add: 새 기능 추가"
+  echo "  🔥 Remove: 불필요한 코드 제거"
+  echo "  ✨ Update: 기존 기능 개선"
+  echo "  🐛 Fix: 버그 수정"
+  echo ""
+  exit 1
+fi
+
+# 최소 길이 체크
+if [ ${#commit_msg} -lt 10 ]; then
+  echo "❌ 커밋 메시지가 너무 짧습니다. (최소 10자)"
+  exit 1
+fi
+
+exit 0
