@@ -19,6 +19,9 @@
 
 ```
 src/
+├── shadcn/       # shadcn/ui 라이브러리 (외부, lint 제외)
+│   ├── ui/       # shadcn 컴포넌트
+│   └── lib/      # shadcn 유틸
 ├── app/          # Next.js App Router, 전역 설정
 ├── pages/        # 페이지 컴포넌트
 ├── widgets/      # 독립적인 블록 (Header, Footer)
@@ -31,6 +34,7 @@ src/
 
 ```
 app → pages → widgets → features → entities → shared
+shadcn (독립)
 ```
 
 ## 🛠️ 기술 스택
@@ -41,6 +45,12 @@ app → pages → widgets → features → entities → shared
 - **React 19** - Server Components
 - **TypeScript 5** - Strict Mode
 - **Tailwind CSS 4** - Utility-First CSS
+
+### UI 라이브러리
+
+- **shadcn/ui** - 재사용 가능한 컴포넌트
+- **lucide-react** - 아이콘 라이브러리
+- **Radix UI** - Headless UI (shadcn 내부 사용)
 
 ### 코드 품질
 
@@ -53,6 +63,7 @@ app → pages → widgets → features → entities → shared
 ### 데이터
 
 - **Firebase** - 인증, DB, 스토리지
+- **Zod** - 환경 변수 검증
 
 ## 📝 코드 작성 규칙
 
@@ -185,6 +196,9 @@ VSCode에서 프로젝트 열면 자동으로 추천:
 8. **[트러블슈팅](./study/08-troubleshooting-guide.md)** - 문제 해결 방법론
 9. **[Husky 설정](./study/09-husky-setup-guide.md)** - Git Hooks 자동화
 10. **[VSCode 설정](./study/10-vscode-setup-guide.md)** - 개발 환경 통일
+11. **[추가 설정 가이드](./study/11-additional-setup-guide.md)** - 프로덕션 배포 준비
+12. **[Zod 가이드](./study/12-zod-guide.md)** - 환경 변수 검증
+13. **[shadcn + FSD 가이드](./study/13-shadcn-fsd-guide.md)** - UI 라이브러리 통합
 
 ## 🚀 시작하기
 
