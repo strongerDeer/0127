@@ -1,39 +1,38 @@
 'use client';
 
-import { useAuth } from '@/features/auth/model/useAuth';
+import { Layout } from '@/widgets/Layout/ui/Layout';
+
 import { LoginButton } from '@/features/auth/ui/LoginButton';
-import { LogoutButton } from '@/features/auth/ui/LogoutButton';
+
+import styles from './page.module.scss';
 
 export default function Home() {
-  const { user, loading } = useAuth();
-
-  if (loading) {
-    return (
-      <div className='flex min-h-screen items-center justify-center'>
-        <p className='text-lg text-gray-500'>로딩 중...</p>
-      </div>
-    );
-  }
-
   return (
-    <div className='flex min-h-screen flex-col items-center justify-center gap-6 p-8'>
-      <h1 className='text-4xl font-bold'>Google 로그인 테스트</h1>
-
-      {user ? (
-        <div className='flex flex-col items-center gap-4'>
-          {user.photoURL && <img src={user.photoURL} alt='프로필' className='h-20 w-20 rounded-full' />}
-          <div className='text-center'>
-            <p className='text-xl font-semibold'>{user.displayName}</p>
-            <p className='text-sm text-gray-500'>{user.email}</p>
-          </div>
-          <LogoutButton />
-        </div>
-      ) : (
-        <div className='flex flex-col items-center gap-4'>
-          <p className='text-gray-600'>로그인이 필요합니다</p>
+    <Layout>
+      <div className={styles.container}>
+        {/* 히어로 섹션 */}
+        <section className={styles.hero}>
+          <h1>당신만의 독서 기록을 시작하세요</h1>
+          <p>AI 기반 도서 취향 분석으로 더 나은 독서 경험을</p>
           <LoginButton />
-        </div>
-      )}
-    </div>
+        </section>
+
+        {/* 기능 소개 */}
+        <section className={styles.features}>
+          <div className={styles.featureCard}>
+            <h3>도서 검색</h3>
+            <p>알라딘 API를 통한 방대한 도서 데이터베이스 검색</p>
+          </div>
+          <div className={styles.featureCard}>
+            <h3>AI 분석</h3>
+            <p>독서 패턴 분석으로 맞춤 도서 추천</p>
+          </div>
+          <div className={styles.featureCard}>
+            <h3>소셜 기능</h3>
+            <p>다른 독서가들과 생각을 공유하세요</p>
+          </div>
+        </section>
+      </div>
+    </Layout>
   );
 }

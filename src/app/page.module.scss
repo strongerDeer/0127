@@ -1,0 +1,48 @@
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 4rem 1rem;
+}
+
+.hero {
+  margin-bottom: 4rem;
+  text-align: center;
+
+  h1 {
+    margin-bottom: 1rem;
+    font-size: 3rem;
+    font-weight: 700;
+  }
+
+  p {
+    margin-bottom: 2rem;
+    font-size: 1.25rem;
+    color: hsl(var(--muted-foreground));
+  }
+}
+
+.features {
+  display: grid;
+  gap: 2rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.featureCard {
+  border-radius: 0.5rem;
+  border: 1px solid hsl(var(--border));
+  padding: 1.5rem;
+  text-align: center;
+
+  h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  p {
+    color: hsl(var(--muted-foreground));
+  }
+}
