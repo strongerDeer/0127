@@ -2,11 +2,11 @@
 
 import Link from 'next/link';
 
-import { Search, User } from 'lucide-react';
-
 import { useAuth } from '@/features/auth/model/useAuth';
 import { LoginButton } from '@/features/auth/ui/LoginButton';
 import { LogoutButton } from '@/features/auth/ui/LogoutButton';
+
+import { Icon } from '@/shared/ui/Icon';
 
 import { Button } from '@/shadcn/ui/button';
 
@@ -29,7 +29,7 @@ export function Header() {
         {/* 네비게이션 */}
         <nav className={styles.nav}>
           <Link href='/search' className={styles.navLink}>
-            <Search className={styles.navIcon} /> 도서 검색
+            <Icon name='search' className={styles.navIcon} /> 도서 검색
           </Link>
           <Link href='/my-books' className={styles.navLink}>
             내 서재
@@ -45,7 +45,7 @@ export function Header() {
             <div className={styles.userInfo}>
               <Link href='/profile'>
                 <Button variant='ghost' size='sm'>
-                  <User className='h-4 w-4' />
+                  <Icon name='user' className='h-4 w-4' />
                   {user.nickname}
                 </Button>
               </Link>

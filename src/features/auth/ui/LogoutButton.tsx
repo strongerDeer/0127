@@ -2,6 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 
+import { toast } from 'sonner';
+
 import { Icon } from '@/shared/ui/Icon';
 
 import { Button } from '@/shadcn/ui/button';
@@ -22,7 +24,7 @@ export function LogoutButton() {
       await signOut();
       router.push('/');
     } catch {
-      alert('로그아웃에 실패했습니다.');
+      toast.error('로그아웃에 실패했습니다.');
     }
   };
 

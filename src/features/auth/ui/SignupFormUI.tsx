@@ -1,5 +1,8 @@
+import { useEffect } from 'react';
+
 import type { User as FirebaseUser } from 'firebase/auth';
 import type { FieldErrors, UseFormReturn } from 'react-hook-form';
+import { toast } from 'sonner';
 
 import { Icon } from '@/shared/ui/Icon';
 
@@ -20,6 +23,7 @@ interface SignupFormUIProps {
   userIdCheckStatus: 'idle' | 'checking' | 'available' | 'taken';
   watchedUserId: string;
   profilePreview: string | null;
+  imageError: string | null;
   onUserIdCheck: () => void;
   onImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
@@ -35,12 +39,20 @@ export function SignupFormUI({
   userIdCheckStatus,
   watchedUserId,
   profilePreview,
+  imageError,
   onUserIdCheck,
   onImageChange,
   onSubmit,
   onCancel,
 }: SignupFormUIProps) {
   const { register } = form;
+
+  // 이미지 에러 처리
+  useEffect(() => {
+    if (imageError) {
+      toast.error(imageError);
+    }
+  }, [imageError]);
 
   return (
     <div className={styles.container}>

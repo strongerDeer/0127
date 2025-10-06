@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
+import { toast } from 'sonner';
+
 import { LogoutButton } from '@/features/auth/ui/LogoutButton';
 
 import { userRepository } from '@/shared/api';
@@ -49,7 +51,7 @@ export function UserProfile({ userId, currentUserId }: UserProfileProps) {
 
   const handleEditClick = () => {
     // TODO: 프로필 수정 페이지로 이동
-    alert('프로필 수정 기능은 곧 제공됩니다.');
+    toast('프로필 수정 기능은 곧 제공됩니다.', { icon: '🚧' });
   };
 
   if (loading) {

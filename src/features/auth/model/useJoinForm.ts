@@ -26,6 +26,7 @@ export function useJoinForm({ firebaseUser, onSuccess, onCancel }: UseJoinFormPr
   const [initialCheckDone, setInitialCheckDone] = useState(false);
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const [profilePreview, setProfilePreview] = useState<string | null>(null);
+  const [imageError, setImageError] = useState<string | null>(null);
 
   const { cancelRegistration } = useAuth();
 
@@ -99,15 +100,18 @@ export function useJoinForm({ firebaseUser, onSuccess, onCancel }: UseJoinFormPr
       const file = e.target.files?.[0];
       if (!file) return;
 
+      // 에러 초기화
+      setImageError(null);
+
       // 파일 크기 체크 (5MB)
       if (file.size > IMAGE_VALIDATION.MAX_SIZE) {
-        alert(IMAGE_VALIDATION.ERRORS.SIZE_EXCEEDED);
+        setImageError(IMAGE_VALIDATION.ERRORS.SIZE_EXCEEDED);
         return;
       }
 
       // 이미지 파일 체크
       if (!file.type.startsWith('image/')) {
-        alert(IMAGE_VALIDATION.ERRORS.INVALID_TYPE);
+        setImageError(IMAGE_VALIDATION.ERRORS.INVALID_TYPE);
         return;
       }
 
@@ -172,18 +176,15 @@ export function useJoinForm({ firebaseUser, onSuccess, onCancel }: UseJoinFormPr
 
   // 회원가입 취소
   const handleCancel = useCallback(async () => {
-    try {
-      setIsSubmitting(true);
+    setIsSubmitting(true);
 
+    try {
       const confirmed = window.confirm('회원가입을 취소하시겠습니까?\n로그인 정보도 함께 삭제됩니다.');
 
       if (confirmed) {
         await cancelRegistration();
         onCancel();
       }
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : '취소 처리에 실패했습니다.';
-      alert(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -230,6 +231,7 @@ export function useJoinForm({ firebaseUser, onSuccess, onCancel }: UseJoinFormPr
     userIdCheckStatus,
     watchedUserId,
     profilePreview,
+    imageError,
     handleUserIdCheck: handleManualUserIdCheck,
     handleImageChange,
     handleSubmit: handleSubmit(onSubmit),

@@ -6,7 +6,12 @@ import { useRouter } from 'next/navigation';
 
 import { useAuth } from '@/features/auth/model/useAuth';
 
-// 로그인이 필요한 페이지
+import styles from './layout.module.scss';
+
+/**
+ * Protected Layout
+ * 로그인이 필요한 페이지들을 위한 레이아웃
+ */
 export default function ProtectedLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const { user, loading } = useAuth();
@@ -19,7 +24,7 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
 
   if (loading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+      <div className={styles.loading}>
         <p>로딩 중...</p>
       </div>
     );

@@ -1,12 +1,12 @@
-import { ReactNode } from 'react';
-
 import { Footer } from '@/widgets/Footer/ui/Footer';
 import { Header } from '@/widgets/Header/ui/Header';
+
+import { Toaster } from '@/shadcn/ui/sonner';
 
 import styles from './Layout.module.scss';
 
 interface LayoutProps {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
 /**
@@ -19,6 +19,7 @@ export function Layout({ children }: LayoutProps) {
       <Header />
       <main className={styles.main}>{children}</main>
       <Footer />
+      <Toaster />
     </div>
   );
 }

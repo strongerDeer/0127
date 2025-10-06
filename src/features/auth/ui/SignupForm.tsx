@@ -2,6 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 
+import { toast } from 'sonner';
+
 import { useAuth } from '../model/useAuth';
 import { useJoinForm } from '../model/useJoinForm';
 import { SignupFormUI } from './SignupFormUI';
@@ -18,6 +20,7 @@ export function SignupForm() {
     userIdCheckStatus,
     watchedUserId,
     profilePreview,
+    imageError,
     handleUserIdCheck,
     handleImageChange,
     handleSubmit,
@@ -25,7 +28,7 @@ export function SignupForm() {
   } = useJoinForm({
     firebaseUser,
     onSuccess: () => {
-      alert('회원가입이 완료되었습니다!');
+      toast.success('회원가입이 완료되었습니다!');
       router.push('/profile');
     },
     onCancel: () => {
@@ -38,9 +41,21 @@ export function SignupForm() {
       await handleSubmit(e);
     } catch (error) {
       if (error instanceof Error) {
-        alert(error.message);
+        toast.error(error.message);
       } else {
-        alert('회원가입 중 오류가 발생했습니다. 다시 시도해주세요.');
+        toast.error('회원가입 중 오류가 발생했습니다. 다시 시도해주세요.');
+      }
+    }
+  };
+
+  const handleFormCancel = async () => {
+    try {
+      await handleCancel();
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error('취소 처리에 실패했습니다.');
       }
     }
   };
@@ -59,10 +74,11 @@ export function SignupForm() {
       userIdCheckStatus={userIdCheckStatus}
       watchedUserId={watchedUserId}
       profilePreview={profilePreview}
+      imageError={imageError}
       onUserIdCheck={handleUserIdCheck}
       onImageChange={handleImageChange}
       onSubmit={handleFormSubmit}
-      onCancel={handleCancel}
+      onCancel={handleFormCancel}
     />
   );
 }
