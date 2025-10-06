@@ -6,6 +6,8 @@ import { Layout } from '@/widgets/Layout/ui/Layout';
 import { pretendard } from '@/shared/font';
 import { META } from '@/shared/lib/meta';
 
+import { Providers } from './providers';
+
 import './globals.css';
 
 const outfit = Outfit({
@@ -40,7 +42,9 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={`${pretendard.className} ${outfit.className} antialiased`}>
-        <Layout> {children}</Layout>
+        <Providers>
+          <Layout> {children}</Layout>
+        </Providers>
       </body>
     </html>
   );
