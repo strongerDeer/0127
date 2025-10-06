@@ -38,6 +38,7 @@ export class FirebaseUserRepository {
         bio: userData.bio,
         birth: userData.birth,
         gender: userData.gender,
+        libraryVisibility: userData.libraryVisibility || 'public', // 기본값: 전체공개
         createdAt: now,
         updatedAt: now,
       };
