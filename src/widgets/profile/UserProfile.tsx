@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 import { LogoutButton } from '@/features/auth/ui/LogoutButton';
 
@@ -22,6 +22,7 @@ interface UserProfileProps {
  * 사용자 프로필 위젯
  */
 export function UserProfile({ userId, currentUserId }: UserProfileProps) {
+  const router = useRouter();
   const [user, setUser] = useState<UserDocument | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -50,8 +51,7 @@ export function UserProfile({ userId, currentUserId }: UserProfileProps) {
   }, [userId]);
 
   const handleEditClick = () => {
-    // TODO: 프로필 수정 페이지로 이동
-    toast('프로필 수정 기능은 곧 제공됩니다.', { icon: '🚧' });
+    router.push('/profile/edit');
   };
 
   if (loading) {
