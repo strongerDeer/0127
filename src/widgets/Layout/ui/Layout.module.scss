@@ -1,4 +1,4 @@
-@use '@/shared/styles/variables' as *;
+@use "@/shared/styles/variables" as *;
 
 .layout {
   display: flex;
@@ -8,4 +8,10 @@
 
 .main {
   flex: 1;
+
+  &:has([class*="minWrap"]) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

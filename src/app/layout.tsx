@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Outfit } from 'next/font/google';
 
+import { Layout } from '@/widgets/Layout/ui/Layout';
+
 import { pretendard } from '@/shared/font';
 import { META } from '@/shared/lib/meta';
 
@@ -37,10 +39,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body
-        className={`${pretendard.className} ${outfit.className} antialiased`}
-      >
-        {children}
+      <body className={`${pretendard.className} ${outfit.className} antialiased`}>
+        <Layout> {children}</Layout>
       </body>
     </html>
   );
