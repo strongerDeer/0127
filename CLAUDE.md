@@ -13,6 +13,29 @@
 - 웹 접근성 준수
 - 테스트 전략 적용
 
+## ✨ 구현된 기능 (2025-10-06 기준)
+
+### 인증 시스템
+
+- ✅ Google OAuth 로그인
+- ✅ 회원가입 (프로필 이미지 업로드 포함)
+- ✅ 아이디/닉네임 중복 체크
+- ✅ 프로필 페이지
+- ✅ 로그아웃
+
+### 라우터 보호
+
+- ✅ Public Layout - 로그인하지 않은 사용자용 (`/login`, `/signup`)
+- ✅ Protected Layout - 로그인 필요한 페이지 (`/profile`)
+- ✅ 자동 리다이렉트 처리
+
+### UI/UX
+
+- ✅ Toast 알림 시스템 (shadcn/sonner)
+- ✅ 반응형 Header/Footer
+- ✅ 로딩 상태 관리
+- ✅ 에러 처리
+
 ## 📐 아키텍처
 
 ### FSD (Feature-Sliced Design)
@@ -65,61 +88,170 @@ shadcn (독립)
 - **Firebase** - 인증, DB, 스토리지
 - **Zod** - 환경 변수 검증
 
-## 📝 코드 작성 규칙
+## 📝 코드 작성 규칙 (⚠️ 필수 준수)
 
-### 1. 레이어 구분
+### 1. 🔴 UI/비즈니스 로직 완전 분리 (최우선)
 
-**UI와 비즈니스 로직 분리:**
+**Container/Presenter 패턴 적용:**
 
 ```tsx
 // ❌ 나쁜 예: UI와 로직 혼재
-export function LoginForm() {
+export function SignupForm() {
   const [email, setEmail] = useState('')
-  const handleLogin = async () => {
-    const response = await fetch('/api/login', { ... })
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = async () => {
+    setLoading(true)
+    const response = await fetch('/api/signup', { ... })
     // 복잡한 로직...
   }
-  return <form>...</form>
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input value={email} onChange={(e) => setEmail(e.target.value)} />
+      <button disabled={loading}>가입</button>
+    </form>
+  )
 }
 
-// ✅ 좋은 예: 레이어 분리
-// features/auth/ui/LoginForm.tsx
-export function LoginForm() {
-  const { email, setEmail, login } = useAuth()
-  return <form onSubmit={login}>...</form>
+// ✅ 좋은 예: Container + Presenter 패턴
+// features/auth/ui/SignupForm.tsx (Container)
+export function SignupForm() {
+  const router = useRouter()
+  const { firebaseUser } = useAuth()
+
+  const {
+    form,
+    errors,
+    isSubmitting,
+    handleSubmit,
+  } = useJoinForm({
+    firebaseUser,
+    onSuccess: () => {
+      toast.success('회원가입이 완료되었습니다!')
+      router.push('/profile')
+    },
+  })
+
+  return (
+    <SignupFormUI
+      form={form}
+      errors={errors}
+      isSubmitting={isSubmitting}
+      onSubmit={handleSubmit}
+    />
+  )
 }
 
-// features/auth/model/useAuth.ts
-export function useAuth() {
-  // 비즈니스 로직만
+// features/auth/ui/SignupFormUI.tsx (Presenter - 순수 UI만)
+export function SignupFormUI({ form, errors, isSubmitting, onSubmit }: Props) {
+  const { register } = form
+
+  return (
+    <form onSubmit={onSubmit}>
+      <Input {...register('email')} />
+      {errors.email && <p>{errors.email.message}</p>}
+      <Button disabled={isSubmitting}>가입</Button>
+    </form>
+  )
+}
+
+// features/auth/model/useJoinForm.ts (비즈니스 로직만)
+export function useJoinForm({ firebaseUser, onSuccess }: Props) {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const form = useForm<JoinFormData>({
+    resolver: zodResolver(joinFormSchema),
+  })
+
+  const onSubmit = useCallback(async (data: JoinFormData) => {
+    setIsSubmitting(true)
+    try {
+      await createUser(firebaseUser.uid, data)
+      onSuccess()
+    } finally {
+      setIsSubmitting(false)
+    }
+  }, [firebaseUser, onSuccess])
+
+  return {
+    form,
+    errors: form.formState.errors,
+    isSubmitting,
+    handleSubmit: form.handleSubmit(onSubmit),
+  }
 }
 ```
 
-### 2. 가독성 우선
+**핵심 원칙:**
 
-**명확한 네이밍:**
+- Container: 데이터 로직, 상태 관리, API 호출
+- Presenter: 순수 UI 렌더링, props로만 동작
+- Model (Custom Hook): 비즈니스 로직, 상태 관리
+
+### 2. 🔴 파일명/함수명 규칙 (엄격히 준수)
+
+**파일명 규칙:**
+
+```
+✅ 좋은 예:
+features/auth/ui/SignupForm.tsx           # Container
+features/auth/ui/SignupFormUI.tsx         # Presenter
+features/auth/model/useAuth.ts            # Custom Hook
+features/auth/model/useJoinForm.ts        # Custom Hook
+features/auth/api/userApi.ts              # API 함수
+features/auth/types/joinForm.ts           # 타입 정의
+shared/constants/imageValidation.ts       # 상수
+
+❌ 나쁜 예:
+features/auth/signup.tsx                  # 역할 불명확
+features/auth/hooks.ts                    # 너무 포괄적
+features/auth/utils.ts                    # 모호함
+```
+
+**함수명 규칙:**
 
 ```tsx
 // ❌ 나쁜 예
 const d = new Date()
 const handleClick = () => { ... }
+const check = () => { ... }
+const data = fetchData()
 
 // ✅ 좋은 예
 const currentDate = new Date()
 const handleUserLogin = () => { ... }
+const checkUserIdAvailable = () => { ... }
+const userData = await fetchUserData()
 ```
 
-**불리언 네이밍:**
+**불리언 네이밍 (is/has/can 필수):**
 
 ```tsx
 // 상태
-const isLoading = true
-const hasError = false
-const canEdit = true
+const isLoading = true;
+const isNewUser = false;
+const hasError = false;
+const canEdit = true;
 
 // 함수
-const checkIsValid = () => { ... }
-const verifyHasPermission = () => { ... }
+const checkIsValid = () => boolean;
+const verifyHasPermission = () => boolean;
+```
+
+**이벤트 핸들러 네이밍:**
+
+```tsx
+// ✅ 좋은 예
+const handleUserIdCheck = () => { ... }      # 사용자 ID 중복 체크
+const handleImageChange = () => { ... }      # 이미지 변경
+const handleFormSubmit = () => { ... }       # 폼 제출
+const handleLogout = () => { ... }           # 로그아웃
+
+// ❌ 나쁜 예
+const onClick = () => { ... }                # 무엇을 클릭?
+const handleChange = () => { ... }           # 무엇을 변경?
+const onSubmit = () => { ... }               # 핸들러는 handle 접두사
 ```
 
 ### 3. 최소 커밋 단위
