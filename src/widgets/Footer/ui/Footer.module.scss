@@ -1,76 +1,9 @@
-@use '@/shared/styles/variables' as *;
+@use "@/shared/styles/variables" as *;
 
 .footer {
   border-top: 1px solid $color-border;
-}
-
-.container {
-  max-width: $container-max-width;
-  margin: 0 auto;
-  padding: $spacing-8 $spacing-4;
-}
-
-.grid {
-  display: grid;
-  gap: $spacing-8;
-
-  @media (min-width: $breakpoint-md) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-.section {
-  h3 {
-    margin-bottom: $spacing-3;
-    font-size: $font-lg;
-    font-weight: $font-semibold;
-  }
-
-  p {
-    font-size: $font-sm;
-    color: $color-muted-foreground;
-  }
-}
-
-.linkList {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-2;
-  font-size: $font-sm;
-
-  li a {
-    color: $color-muted-foreground;
-    transition: color $transition-base;
-
-    &:hover {
-      color: $color-primary;
-    }
-  }
-}
-
-.contactLinks {
-  display: flex;
-  gap: $spacing-4;
-
-  a {
-    color: $color-muted-foreground;
-    transition: color $transition-base;
-
-    &:hover {
-      color: $color-primary;
-    }
-
-    svg {
-      width: $spacing-5;
-      height: $spacing-5;
-    }
-  }
-}
-
-.copyright {
   margin-top: $spacing-8;
-  border-top: 1px solid $color-border;
-  padding-top: $spacing-8;
+  padding: $spacing-8;
   text-align: center;
   font-size: $font-sm;
   color: $color-muted-foreground;
