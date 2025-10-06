@@ -23,7 +23,6 @@ export function Header() {
       <div className={styles.container}>
         {/* 로고 */}
         <Link href='/' className={styles.logo}>
-          {/* <BookOpen className='h-6 w-6' /> */}
           <span className={styles.logoText}>0127.</span>
         </Link>
 

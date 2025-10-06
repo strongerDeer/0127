@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import { LogIn } from 'lucide-react';
+import { Icon } from '@/shared/ui/Icon';
 
 import { Button } from '@/shadcn/ui/button';
 
@@ -34,8 +34,8 @@ export function LoginButton() {
 
   return (
     <Button onClick={signInWithGoogle} size='lg' className={styles.button}>
-      <LogIn />
-      Google로 로그인
+      <Icon name='login' />
+      로그인
     </Button>
   );
 }

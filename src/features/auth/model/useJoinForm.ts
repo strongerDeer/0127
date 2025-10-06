@@ -7,6 +7,8 @@ import type { User as FirebaseUser } from 'firebase/auth';
 import { serverTimestamp } from 'firebase/firestore';
 import { useForm } from 'react-hook-form';
 
+import { uploadProfileImage } from '@/shared/api/firebase/storage/uploadImage';
+
 import { UserApiError, checkUserIdAvailable, createUser } from '../api/userApi';
 import { type JoinFormData, getDefaultUserId, joinFormSchema } from '../types/joinForm';
 import { useAuth } from './useAuth';
@@ -21,6 +23,8 @@ export function useJoinForm({ firebaseUser, onSuccess, onCancel }: UseJoinFormPr
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [userIdCheckStatus, setUserIdCheckStatus] = useState<'idle' | 'checking' | 'available' | 'taken'>('idle');
   const [initialCheckDone, setInitialCheckDone] = useState(false);
+  const [profileImage, setProfileImage] = useState<File | null>(null);
+  const [profilePreview, setProfilePreview] = useState<string | null>(null);
 
   const { cancelRegistration } = useAuth();
 
@@ -88,6 +92,37 @@ export function useJoinForm({ firebaseUser, onSuccess, onCancel }: UseJoinFormPr
     handleUserIdCheck();
   }, [handleUserIdCheck]);
 
+  // 프로필 이미지 변경
+  const handleImageChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+
+      // 파일 크기 체크 (5MB)
+      const MAX_SIZE = 5 * 1024 * 1024;
+      if (file.size > MAX_SIZE) {
+        alert('파일 크기는 5MB 이하여야 합니다');
+        return;
+      }
+
+      // 이미지 파일 체크
+      if (!file.type.startsWith('image/')) {
+        alert('이미지 파일만 업로드 가능합니다');
+        return;
+      }
+
+      // 이전 미리보기 URL 해제
+      if (profilePreview) {
+        URL.revokeObjectURL(profilePreview);
+      }
+
+      // 파일 저장 및 미리보기 생성
+      setProfileImage(file);
+      setProfilePreview(URL.createObjectURL(file));
+    },
+    [profilePreview]
+  );
+
   // 폼 제출
   const onSubmit = useCallback(
     async (data: JoinFormData) => {
@@ -102,6 +137,12 @@ export function useJoinForm({ firebaseUser, onSuccess, onCancel }: UseJoinFormPr
       setIsSubmitting(true);
 
       try {
+        // 프로필 이미지 업로드 (선택한 경우)
+        let photoURL = firebaseUser.photoURL || undefined;
+        if (profileImage) {
+          photoURL = await uploadProfileImage(profileImage, data.userId);
+        }
+
         await createUser(firebaseUser.uid, {
           userId: data.userId,
           uid: firebaseUser.uid,
@@ -110,7 +151,7 @@ export function useJoinForm({ firebaseUser, onSuccess, onCancel }: UseJoinFormPr
           gender: data.gender,
           birth: data.birth,
           bio: data.bio,
-          photoURL: firebaseUser.photoURL || undefined,
+          photoURL,
           createdAt: serverTimestamp(),
           updatedAt: serverTimestamp(),
         });
@@ -172,6 +213,15 @@ export function useJoinForm({ firebaseUser, onSuccess, onCancel }: UseJoinFormPr
     }
   }, [watchedUserId, initialCheckDone]);
 
+  // 컴포넌트 언마운트 시 미리보기 URL 정리
+  useEffect(() => {
+    return () => {
+      if (profilePreview) {
+        URL.revokeObjectURL(profilePreview);
+      }
+    };
+  }, [profilePreview]);
+
   return {
     form,
     errors,
@@ -179,7 +229,9 @@ export function useJoinForm({ firebaseUser, onSuccess, onCancel }: UseJoinFormPr
     isSubmitting,
     userIdCheckStatus,
     watchedUserId,
+    profilePreview,
     handleUserIdCheck: handleManualUserIdCheck,
+    handleImageChange,
     handleSubmit: handleSubmit(onSubmit),
     handleCancel,
   };

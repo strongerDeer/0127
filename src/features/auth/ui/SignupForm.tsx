@@ -17,7 +17,9 @@ export function SignupForm() {
     isSubmitting,
     userIdCheckStatus,
     watchedUserId,
+    profilePreview,
     handleUserIdCheck,
+    handleImageChange,
     handleSubmit,
     handleCancel,
   } = useJoinForm({
@@ -56,7 +58,9 @@ export function SignupForm() {
       isSubmitting={isSubmitting}
       userIdCheckStatus={userIdCheckStatus}
       watchedUserId={watchedUserId}
+      profilePreview={profilePreview}
       onUserIdCheck={handleUserIdCheck}
+      onImageChange={handleImageChange}
       onSubmit={handleFormSubmit}
       onCancel={handleCancel}
     />

@@ -1,6 +1,8 @@
 import type { User as FirebaseUser } from 'firebase/auth';
 import type { FieldErrors, UseFormReturn } from 'react-hook-form';
 
+import { Icon } from '@/shared/ui/Icon';
+
 import { Button } from '@/shadcn/ui/button';
 import { Input } from '@/shadcn/ui/input';
 import { Label } from '@/shadcn/ui/label';
@@ -17,7 +19,9 @@ interface SignupFormUIProps {
   isSubmitting: boolean;
   userIdCheckStatus: 'idle' | 'checking' | 'available' | 'taken';
   watchedUserId: string;
+  profilePreview: string | null;
   onUserIdCheck: () => void;
+  onImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
   onCancel: () => void;
 }
@@ -30,7 +34,9 @@ export function SignupFormUI({
   isSubmitting,
   userIdCheckStatus,
   watchedUserId,
+  profilePreview,
   onUserIdCheck,
+  onImageChange,
   onSubmit,
   onCancel,
 }: SignupFormUIProps) {
@@ -45,11 +51,22 @@ export function SignupFormUI({
         </p>
       </div>
 
-      {firebaseUser?.photoURL && (
-        <div className={styles.profileImage}>
-          <img src={firebaseUser.photoURL} alt='프로필' />
+      <div className={styles.profileImage}>
+        <div className={styles.imageWrapper}>
+          <img src={profilePreview || firebaseUser?.photoURL || '/default-avatar.png'} alt='프로필' />
+          <label htmlFor='profileImageInput' className={styles.imgButton}>
+            <Icon name='image' size={20} />
+            <input
+              id='profileImageInput'
+              type='file'
+              accept='image/*'
+              onChange={onImageChange}
+              disabled={isSubmitting}
+              style={{ display: 'none' }}
+            />
+          </label>
         </div>
-      )}
+      </div>
 
       <form onSubmit={onSubmit} className={styles.form}>
         {/* 아이디 */}

@@ -3,6 +3,7 @@ import { FirebaseApp, getApps, initializeApp } from 'firebase/app';
 import { Auth, GoogleAuthProvider, getAuth } from 'firebase/auth';
 import { Firestore, getFirestore } from 'firebase/firestore';
 import { Functions, getFunctions } from 'firebase/functions';
+import { FirebaseStorage, getStorage } from 'firebase/storage';
 
 import { env } from '@/shared/config/env';
 
@@ -34,6 +35,7 @@ if (typeof window !== 'undefined') {
 const firebaseAuth: Auth = getAuth(firebaseApp); // firebase auth 사용(구글 로그인)
 const firebaseFirestore: Firestore = getFirestore(firebaseApp);
 const firebaseFunctions: Functions = getFunctions(firebaseApp);
+const firebaseStorage: FirebaseStorage = getStorage(firebaseApp);
 
 // Google Auth Provider
 const googleAuthProvider: GoogleAuthProvider = new GoogleAuthProvider();
@@ -50,4 +52,4 @@ export const isFirebaseConnected = () => {
   }
 };
 
-export { analytics, firebaseAuth, firebaseFirestore, firebaseFunctions, googleAuthProvider };
+export { analytics, firebaseAuth, firebaseFirestore, firebaseFunctions, firebaseStorage, googleAuthProvider };
