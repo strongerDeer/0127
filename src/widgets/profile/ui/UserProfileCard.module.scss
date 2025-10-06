@@ -1,0 +1,99 @@
+@use 'sass:color';
+@use '@/shared/styles/variables.scss' as *;
+
+.card {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: $spacing-6;
+  background-color: $color-background;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+}
+
+.imageWrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: $spacing-6;
+}
+
+.profileImage {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid $color-primary;
+}
+
+.info {
+  text-align: center;
+  margin-bottom: $spacing-6;
+  padding-bottom: $spacing-6;
+  border-bottom: 1px solid $color-border;
+}
+
+.nickname {
+  font-size: $font-2xl;
+  font-weight: bold;
+  margin-bottom: $spacing-2;
+  color: $color-text-primary;
+}
+
+.userId {
+  font-size: $font-md;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-3;
+}
+
+.bio {
+  font-size: $font-sm;
+  color: $color-text-primary;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+  margin-bottom: $spacing-6;
+}
+
+.detailItem {
+  display: flex;
+  justify-content: space-between;
+  padding: $spacing-3;
+  background-color: color.adjust($color-background, $lightness: -2%);
+  border-radius: $radius-md;
+}
+
+.label {
+  font-size: $font-sm;
+  color: $color-text-secondary;
+  font-weight: 500;
+}
+
+.value {
+  font-size: $font-sm;
+  color: $color-text-primary;
+}
+
+.editButton {
+  width: 100%;
+  padding: $spacing-3;
+  background-color: $color-primary;
+  color: white;
+  border: none;
+  border-radius: $radius-md;
+  font-size: $font-md;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: color.adjust($color-primary, $lightness: -10%);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}

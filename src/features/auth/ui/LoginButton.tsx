@@ -27,8 +27,8 @@ export function LoginButton() {
       // 신규 사용자 -> 회원가입 페이지
       router.push('/signup');
     } else if (user) {
-      // 기존 사용자 -> 메인 페이지 (TODO: 나중에 대시보드로 변경)
-      router.push('/');
+      // 기존 사용자 -> 프로필 페이지
+      router.push('/profile');
     }
   }, [user, isNewUser, loading, router]);
 

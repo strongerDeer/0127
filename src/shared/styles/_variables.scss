@@ -39,6 +39,13 @@ $color-border: #e5e5e5;
 $color-input: #e5e5e5;
 $color-ring: #a3a3a3;
 
+// Text Colors
+$color-text-primary: #0a0a0a;
+$color-text-secondary: #737373;
+
+// Error
+$color-error: #ef4444;
+
 // ============================================
 // Dark Mode 색상
 // ============================================
@@ -87,6 +94,7 @@ $spacing-24: 6rem;     // 96px
 $font-xs: 0.75rem;     // 12px
 $font-sm: 0.875rem;    // 14px
 $font-base: 1rem;      // 16px
+$font-md: 1rem;        // 16px (alias for base)
 $font-lg: 1.125rem;    // 18px
 $font-xl: 1.25rem;     // 20px
 $font-2xl: 1.5rem;     // 24px

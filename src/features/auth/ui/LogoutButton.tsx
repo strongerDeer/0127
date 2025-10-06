@@ -1,6 +1,8 @@
 'use client';
 
-import { LogOut } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+
+import { Icon } from '@/shared/ui/Icon';
 
 import { Button } from '@/shadcn/ui/button';
 
@@ -12,11 +14,21 @@ import styles from './LogoutButton.module.scss';
  * 로그아웃 버튼 컴포넌트
  */
 export function LogoutButton() {
+  const router = useRouter();
   const { signOut } = useAuth();
 
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      router.push('/');
+    } catch {
+      alert('로그아웃에 실패했습니다.');
+    }
+  };
+
   return (
-    <Button onClick={signOut} variant='outline' size='sm' className={styles.button}>
-      <LogOut />
+    <Button onClick={handleLogout} variant='outline' size='sm' className={styles.button}>
+      <Icon name='logout' />
       로그아웃
     </Button>
   );

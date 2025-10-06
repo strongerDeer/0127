@@ -1,5 +1,7 @@
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
+import { IMAGE_VALIDATION } from '@/shared/constants/imageValidation';
+
 import { firebaseStorage } from '../config';
 
 /**
@@ -11,14 +13,13 @@ import { firebaseStorage } from '../config';
 export async function uploadProfileImage(file: File, userId: string): Promise<string> {
   try {
     // 파일 크기 체크 (5MB 제한)
-    const MAX_SIZE = 5 * 1024 * 1024;
-    if (file.size > MAX_SIZE) {
-      throw new Error('파일 크기는 5MB 이하여야 합니다');
+    if (file.size > IMAGE_VALIDATION.MAX_SIZE) {
+      throw new Error(IMAGE_VALIDATION.ERRORS.SIZE_EXCEEDED);
     }
 
     // 파일 타입 체크
     if (!file.type.startsWith('image/')) {
-      throw new Error('이미지 파일만 업로드 가능합니다');
+      throw new Error(IMAGE_VALIDATION.ERRORS.INVALID_TYPE);
     }
 
     // 파일 확장자 추출

@@ -8,6 +8,7 @@ import { serverTimestamp } from 'firebase/firestore';
 import { useForm } from 'react-hook-form';
 
 import { uploadProfileImage } from '@/shared/api/firebase/storage/uploadImage';
+import { IMAGE_VALIDATION } from '@/shared/constants/imageValidation';
 
 import { UserApiError, checkUserIdAvailable, createUser } from '../api/userApi';
 import { type JoinFormData, getDefaultUserId, joinFormSchema } from '../types/joinForm';
@@ -99,15 +100,14 @@ export function useJoinForm({ firebaseUser, onSuccess, onCancel }: UseJoinFormPr
       if (!file) return;
 
       // 파일 크기 체크 (5MB)
-      const MAX_SIZE = 5 * 1024 * 1024;
-      if (file.size > MAX_SIZE) {
-        alert('파일 크기는 5MB 이하여야 합니다');
+      if (file.size > IMAGE_VALIDATION.MAX_SIZE) {
+        alert(IMAGE_VALIDATION.ERRORS.SIZE_EXCEEDED);
         return;
       }
 
       // 이미지 파일 체크
       if (!file.type.startsWith('image/')) {
-        alert('이미지 파일만 업로드 가능합니다');
+        alert(IMAGE_VALIDATION.ERRORS.INVALID_TYPE);
         return;
       }
 
@@ -167,7 +167,7 @@ export function useJoinForm({ firebaseUser, onSuccess, onCancel }: UseJoinFormPr
         setIsSubmitting(false);
       }
     },
-    [firebaseUser, userIdCheckStatus, onSuccess]
+    [firebaseUser, userIdCheckStatus, profileImage, onSuccess]
   );
 
   // 회원가입 취소

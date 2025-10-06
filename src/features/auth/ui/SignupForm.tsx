@@ -26,7 +26,7 @@ export function SignupForm() {
     firebaseUser,
     onSuccess: () => {
       alert('회원가입이 완료되었습니다!');
-      router.push('/');
+      router.push('/profile');
     },
     onCancel: () => {
       router.push('/');

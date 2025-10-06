@@ -2,16 +2,15 @@ import { useEffect, useState } from 'react';
 
 import { type User as FirebaseUser, deleteUser, signOut as firebaseSignOut, signInWithPopup } from 'firebase/auth';
 
-import type { User } from '@/entities/user/model/types';
-
 import { userRepository } from '@/shared/api';
 import { firebaseAuth, googleAuthProvider } from '@/shared/api/firebase/config';
+import type { UserDocument } from '@/shared/types/user';
 
 /**
  * 인증 관련 비즈니스 로직
  */
 export function useAuth() {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserDocument | null>(null);
   const [firebaseUser, setFirebaseUser] = useState<FirebaseUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [isNewUser, setIsNewUser] = useState(false);
@@ -19,32 +18,35 @@ export function useAuth() {
   // 사용자 상태 변경 감지
   useEffect(() => {
     const unsubscribe = firebaseAuth.onAuthStateChanged(async (authUser) => {
-      if (authUser) {
-        setFirebaseUser(authUser);
+      try {
+        if (authUser) {
+          setFirebaseUser(authUser);
 
-        // Firestore에서 사용자 문서 확인
-        const userDoc = await userRepository.getByUid(authUser.uid);
+          // Firestore에서 사용자 문서 확인
+          const userDoc = await userRepository.getByUid(authUser.uid);
 
-        if (userDoc) {
-          // 기존 사용자
-          setUser({
-            uid: authUser.uid,
-            email: authUser.email,
-            displayName: authUser.displayName,
-            photoURL: authUser.photoURL,
-          });
-          setIsNewUser(false);
+          if (userDoc) {
+            // 기존 사용자
+            setUser(userDoc);
+            setIsNewUser(false);
+          } else {
+            // 신규 사용자 - 회원가입 필요
+            setUser(null);
+            setIsNewUser(true);
+          }
         } else {
-          // 신규 사용자 - 회원가입 필요
+          setFirebaseUser(null);
           setUser(null);
-          setIsNewUser(true);
+          setIsNewUser(false);
         }
-      } else {
+      } catch {
+        // Firestore 조회 실패 시 로그아웃 처리
         setFirebaseUser(null);
         setUser(null);
         setIsNewUser(false);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     });
 
     return () => unsubscribe();
