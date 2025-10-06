@@ -46,7 +46,7 @@ export function Header() {
               <Link href='/profile'>
                 <Button variant='ghost' size='sm'>
                   <User className='h-4 w-4' />
-                  {user.displayName}
+                  {user.nickname}
                 </Button>
               </Link>
               <LogoutButton />
