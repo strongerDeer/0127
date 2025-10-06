@@ -1,17 +1,32 @@
 'use client';
 
-import { LoginButton } from '@/features/auth/ui/LoginButton';
+import Link from 'next/link';
+
+import { useAuth } from '@/features/auth/model/useAuth';
+
+import { Icon } from '@/shared/ui/Icon';
+
+import { Button } from '@/shadcn/ui/button';
 
 import styles from './page.module.scss';
 
 export default function Home() {
+  const { user } = useAuth();
+
   return (
     <div className={styles.container}>
       {/* 히어로 섹션 */}
       <section className={styles.hero}>
         <h1>당신만의 독서 기록을 시작하세요</h1>
         <p>AI 기반 도서 취향 분석으로 더 나은 독서 경험을</p>
-        <LoginButton />
+        {!user && (
+          <Link href='/login'>
+            <Button size='lg'>
+              <Icon name='login' />
+              로그인
+            </Button>
+          </Link>
+        )}
       </section>
 
       {/* 기능 소개 */}
