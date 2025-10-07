@@ -129,7 +129,7 @@
 
   &:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 2px $color-ring;
+    box-shadow: 0 0 0 2px var(--ring);
   }
 
   &:disabled {
