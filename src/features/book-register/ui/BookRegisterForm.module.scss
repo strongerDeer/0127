@@ -1,0 +1,154 @@
+@use "@/shared/styles/variables" as *;
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: $spacing-6;
+}
+
+.bookInfo {
+  display: flex;
+  gap: $spacing-4;
+  padding: $spacing-4;
+  background: var(--accent);
+  border-radius: $radius-md;
+  margin-bottom: $spacing-6;
+}
+
+.bookCover {
+  width: 80px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: $radius-sm;
+  flex-shrink: 0;
+}
+
+.bookDetails {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-1;
+}
+
+.bookTitle {
+  font-size: $font-lg;
+  font-weight: $font-semibold;
+  color: var(--foreground);
+  line-height: 1.4;
+}
+
+.bookAuthor {
+  font-size: $font-sm;
+  color: var(--muted-foreground);
+}
+
+.bookPublisher {
+  font-size: $font-xs;
+  color: var(--muted-foreground);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
+.statusButtons,
+.ratingButtons {
+  display: flex;
+  gap: $spacing-2;
+  flex-wrap: wrap;
+}
+
+.statusButton,
+.ratingButton {
+  position: relative;
+  cursor: pointer;
+
+  input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-1;
+    padding: $spacing-2 $spacing-3;
+    border: 1px solid var(--border);
+    border-radius: $radius-md;
+    background-color: var(--background);
+    font-size: $font-sm;
+    transition: all 0.2s;
+
+    &:hover {
+      border-color: var(--primary);
+    }
+  }
+
+  input[type="radio"]:checked + span,
+  span.active {
+    background-color: var(--primary);
+    color: white;
+    border-color: var(--primary);
+  }
+
+  input[type="radio"]:disabled + span {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+.emoji {
+  font-size: $font-lg;
+}
+
+.ratingLabel {
+  font-size: $font-sm;
+}
+
+.error {
+  font-size: $font-sm;
+  color: var(--destructive);
+}
+
+.hint {
+  font-size: $font-xs;
+  color: var(--muted-foreground);
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  cursor: pointer;
+
+  input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+  }
+
+  span {
+    font-size: $font-sm;
+  }
+}
+
+.buttons {
+  display: flex;
+  gap: $spacing-3;
+  margin-top: $spacing-4;
+
+  button {
+    flex: 1;
+  }
+}
