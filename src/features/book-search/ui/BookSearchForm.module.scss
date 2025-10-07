@@ -1,0 +1,112 @@
+@use "@/shared/styles/variables" as *;
+
+.container {
+  width: 100%;
+  position: relative;
+}
+
+.searchBox {
+  position: relative;
+  width: 100%;
+}
+
+.searchIcon {
+  position: absolute;
+  left: $spacing-3;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted-foreground);
+  width: 20px;
+  height: 20px;
+}
+
+.searchInput {
+  padding-left: $spacing-10;
+}
+
+.results {
+  position: absolute;
+  top: calc(100% + $spacing-2);
+  left: 0;
+  right: 0;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: $radius-md;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 50;
+}
+
+.message {
+  padding: $spacing-4;
+  text-align: center;
+  color: var(--muted-foreground);
+  font-size: $font-sm;
+}
+
+.error {
+  padding: $spacing-4;
+  text-align: center;
+  color: var(--destructive);
+  font-size: $font-sm;
+}
+
+.bookList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.bookItem {
+  display: flex;
+  gap: $spacing-3;
+  padding: $spacing-3;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border);
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: var(--accent);
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.bookCover {
+  width: 60px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: $radius-sm;
+  flex-shrink: 0;
+}
+
+.bookInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-1;
+}
+
+.bookTitle {
+  font-size: $font-md;
+  font-weight: $font-semibold;
+  color: var(--foreground);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.bookAuthor {
+  font-size: $font-sm;
+  color: var(--muted-foreground);
+}
+
+.bookPublisher {
+  font-size: $font-xs;
+  color: var(--muted-foreground);
+}
