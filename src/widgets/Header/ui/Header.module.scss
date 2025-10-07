@@ -1,16 +1,16 @@
-@use '@/shared/styles/variables' as *;
+@use "@/shared/styles/variables" as *;
 
 .header {
   position: sticky;
   top: 0;
   z-index: $z-sticky;
   width: 100%;
-  border-bottom: 1px solid $color-border;
-  background-color: rgba($color-background, 0.95);
+  border-bottom: 1px solid var(--border);
+  background-color: rgba(var(--background), 0.95);
   backdrop-filter: blur(8px);
 
   @supports (backdrop-filter: blur(8px)) {
-    background-color: rgba($color-background, 0.6);
+    background-color: rgba(var(--background), 0.6);
   }
 }
 
@@ -28,11 +28,18 @@
   display: flex;
   align-items: center;
   gap: $spacing-2;
+  overflow: hidden;
 }
 
 .logoText {
   font-size: $font-xl;
   font-weight: $font-bold;
+
+  span {
+    color: var(--primary);
+    display: inline-block;
+    transform: scale(1.5) translateY(-12%);
+  }
 }
 
 .nav {
@@ -51,7 +58,7 @@
   transition: color $transition-base;
 
   &:hover {
-    color: $color-primary;
+    color: var(--primary);
   }
 }
 

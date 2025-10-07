@@ -1,10 +1,10 @@
 @use "@/shared/styles/variables" as *;
 
 .footer {
-  border-top: 1px solid $color-border;
+  border-top: 1px solid var(--border);
   margin-top: $spacing-8;
   padding: $spacing-8;
   text-align: center;
   font-size: $font-sm;
-  color: $color-muted-foreground;
+  color: var(--muted-foreground);
 }

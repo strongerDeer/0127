@@ -1,12 +1,12 @@
-@use 'sass:color';
-@use '@/shared/styles/variables.scss' as *;
+@use "sass:color";
+@use "@/shared/styles/variables.scss" as *;
 
 .card {
   max-width: 600px;
   margin: 0 auto;
   padding: $spacing-6;
-  background-color: $color-background;
-  border: 1px solid $color-border;
+  background-color: var(--background);
+  border: 1px solid var(--border);
   border-radius: $radius-lg;
 }
 
@@ -21,32 +21,32 @@
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid $color-primary;
+  border: 3px solid var(--primary);
 }
 
 .info {
   text-align: center;
   margin-bottom: $spacing-6;
   padding-bottom: $spacing-6;
-  border-bottom: 1px solid $color-border;
+  border-bottom: 1px solid var(--border);
 }
 
 .nickname {
   font-size: $font-2xl;
   font-weight: bold;
   margin-bottom: $spacing-2;
-  color: $color-text-primary;
+  color: var(--text-primary);
 }
 
 .userId {
   font-size: $font-md;
-  color: $color-text-secondary;
+  color: var(--text-secondary);
   margin-bottom: $spacing-3;
 }
 
 .bio {
   font-size: $font-sm;
-  color: $color-text-primary;
+  color: var(--text-primary);
   line-height: 1.6;
   white-space: pre-wrap;
 }
@@ -62,25 +62,25 @@
   display: flex;
   justify-content: space-between;
   padding: $spacing-3;
-  background-color: color.adjust($color-background, $lightness: -2%);
+  // background-color: color.adjust(var(--background), $lightness: -2%);
   border-radius: $radius-md;
 }
 
 .label {
   font-size: $font-sm;
-  color: $color-text-secondary;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
 .value {
   font-size: $font-sm;
-  color: $color-text-primary;
+  color: var(--text-primary);
 }
 
 .editButton {
   width: 100%;
   padding: $spacing-3;
-  background-color: $color-primary;
+  background-color: var(--primary);
   color: white;
   border: none;
   border-radius: $radius-md;
@@ -90,7 +90,7 @@
   transition: all 0.2s;
 
   &:hover {
-    background-color: color.adjust($color-primary, $lightness: -10%);
+    // background-color: color.adjust(var(--primary), $lightness: -10%);
   }
 
   &:active {

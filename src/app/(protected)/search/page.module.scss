@@ -1,0 +1,28 @@
+@use '@/shared/styles/variables' as *;
+
+.container {
+  min-height: 100vh;
+  padding: $spacing-6;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: $spacing-8;
+
+  h1 {
+    font-size: $font-3xl;
+    font-weight: $font-bold;
+    margin-bottom: $spacing-2;
+  }
+
+  p {
+    color: var(--muted-foreground);
+    font-size: $font-md;
+  }
+}
+
+.searchWrapper {
+  width: 100%;
+}

@@ -1,0 +1,22 @@
+@use "@/shared/styles/variables.scss" as *;
+
+.notFound {
+  text-align: center;
+}
+.boldTitle {
+  font-size: 4em;
+  span {
+    color: var(--primary);
+  }
+}
+.title {
+  font-size: 1.6em;
+}
+.text {
+  color: var(--text-secondary);
+  font-size: 1.2em;
+}
+
+.btns {
+  margin-top: 4rem;
+}

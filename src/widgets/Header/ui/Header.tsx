@@ -2,19 +2,19 @@
 
 import Link from 'next/link';
 
+import clsx from 'clsx';
+
 import { useAuth } from '@/features/auth/model/useAuth';
 import { LoginButton } from '@/features/auth/ui/LoginButton';
 import { LogoutButton } from '@/features/auth/ui/LogoutButton';
 
+import { outfit } from '@/shared/font';
 import { Icon } from '@/shared/ui/Icon';
 
 import { Button } from '@/shadcn/ui/button';
 
 import styles from './Header.module.scss';
 
-/**
- * 전역 헤더 컴포넌트
- */
 export function Header() {
   const { user } = useAuth();
 
@@ -23,7 +23,9 @@ export function Header() {
       <div className={styles.container}>
         {/* 로고 */}
         <Link href='/' className={styles.logo}>
-          <span className={styles.logoText}>0127.</span>
+          <h1 className={clsx(outfit.className, styles.logoText)}>
+            0127<span>.</span>
+          </h1>
         </Link>
 
         {/* 네비게이션 */}

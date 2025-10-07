@@ -1,0 +1,13 @@
+@use '@/shared/styles/variables' as *;
+
+.container {
+  min-height: 100vh;
+  padding: $spacing-6;
+}
+
+.loading {
+  text-align: center;
+  color: var(--muted-foreground);
+  font-size: $font-md;
+  padding: $spacing-6;
+}

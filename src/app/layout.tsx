@@ -5,10 +5,9 @@ import { Layout } from '@/widgets/Layout/ui/Layout';
 
 import { pretendard } from '@/shared/font';
 import { META } from '@/shared/lib/meta';
+import '@/shared/styles/common.scss';
 
 import { Providers } from './providers';
-
-import './globals.css';
 
 const outfit = Outfit({
   subsets: ['latin'],

@@ -1,4 +1,4 @@
-@use '@/shared/styles/variables' as *;
+@use "@/shared/styles/variables" as *;
 
 .container {
   max-width: $container-max-width;
@@ -19,7 +19,7 @@
   p {
     margin-bottom: $spacing-8;
     font-size: $font-xl;
-    color: $color-muted-foreground;
+    color: var(--muted-foreground);
   }
 }
 
@@ -34,7 +34,7 @@
 
 .featureCard {
   border-radius: $radius-md;
-  border: 1px solid $color-border;
+  border: 1px solid var(--border);
   padding: $spacing-6;
   text-align: center;
 
@@ -45,6 +45,6 @@
   }
 
   p {
-    color: $color-muted-foreground;
+    color: var(--muted-foreground);
   }
 }

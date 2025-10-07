@@ -1,0 +1,87 @@
+@use '@/shared/styles/variables' as *;
+
+.container {
+  min-height: 100vh;
+  padding: $spacing-6;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-6;
+
+  h1 {
+    font-size: $font-3xl;
+    font-weight: $font-bold;
+  }
+}
+
+.headerLeft {
+  display: flex;
+  align-items: baseline;
+  gap: $spacing-3;
+}
+
+.count {
+  font-size: $font-md;
+  color: var(--muted-foreground);
+}
+
+.loading,
+.error {
+  text-align: center;
+  color: var(--muted-foreground);
+  font-size: $font-md;
+  padding: $spacing-6;
+}
+
+.error {
+  color: var(--destructive);
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-12 $spacing-6;
+  text-align: center;
+
+  h2 {
+    font-size: $font-2xl;
+    font-weight: $font-semibold;
+    margin-top: $spacing-4;
+    margin-bottom: $spacing-2;
+  }
+
+  p {
+    font-size: $font-md;
+    color: var(--muted-foreground);
+    margin-bottom: $spacing-6;
+  }
+}
+
+.emptyIcon {
+  color: var(--muted-foreground);
+}
+
+.emptyButton {
+  margin-top: $spacing-4;
+}
+
+.bookList {
+  display: grid;
+  gap: $spacing-4;
+  grid-template-columns: 1fr;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

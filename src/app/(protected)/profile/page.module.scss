@@ -1,4 +1,4 @@
-@use '@/shared/styles/variables.scss' as *;
+@use "@/shared/styles/variables.scss" as *;
 
 .container {
   min-height: 100vh;
@@ -10,9 +10,9 @@
   text-align: center;
   padding: $spacing-8;
   font-size: $font-lg;
-  color: $color-text-secondary;
+  color: var(--text-secondary);
 }
 
 .error {
-  color: $color-error;
+  color: var(--error);
 }

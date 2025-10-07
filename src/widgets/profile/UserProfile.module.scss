@@ -1,4 +1,4 @@
-@use '@/shared/styles/variables.scss' as *;
+@use "@/shared/styles/variables.scss" as *;
 
 .container {
   max-width: 800px;
@@ -17,9 +17,9 @@
   text-align: center;
   padding: $spacing-8;
   font-size: $font-md;
-  color: $color-text-secondary;
+  color: var(--text-secondary);
 }
 
 .error {
-  color: $color-error;
+  color: var(--error);
 }

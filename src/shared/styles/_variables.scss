@@ -1,106 +1,193 @@
+@function convertRem($number) {
+  @return $number * 0.625 * 0.1rem;
+}
+
+// ===== 변수 정의 =====
+$maxW: 1920;
+$maxWidth: $maxW * convertRem(1);
+$gap: 0.4em;
+$borderRadius: 0.5em;
+$boxShadow: 5px 5px 2rem 0 rgba(0, 0, 0, 0.05);
+$boxShadowSmall: 3px 3px 1rem 0 rgba(0, 0, 0, 0.15);
+$formHeight: convertRem(48);
+$transition: all 0.3s;
+
+// ===== 함수 정의 =====
+@function fcSize($min, $max) {
+  @return clamp($min * convertRem(1), (100vw / $maxW) * $max, $max * convertRem(1));
+}
+
+// ===== 함수 사용 변수 =====
+$pad: fcSize(24, 40);
+
+// ===== 믹스인 정의 =====
+@mixin ellipse($num: 1, $lineHeight: 1.6) {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $num;
+  height: 1em * $num * $lineHeight;
+}
+
+@mixin grid($width, $gap1: convertRem(24), $gap2: convertRem(25)) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax($width, 1fr));
+  gap: $gap1 $gap2;
+  @media screen and (max-width: 360px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+@mixin a11y-hidden {
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+}
+
 // ============================================
 // 색상 변수 (Light Mode)
 // ============================================
 
-// 기본 색상
-$color-background: #ffffff;
-$color-foreground: #0a0a0a;
+$light: (
+  // 기본 색상
+  background: #ffffff,
+  foreground: #0a0a0a,
 
-// 카드
-$color-card: #ffffff;
-$color-card-foreground: #0a0a0a;
+  // 카드
+  card: #ffffff,
+  card-foreground: #0a0a0a,
 
-// 팝오버
-$color-popover: #ffffff;
-$color-popover-foreground: #0a0a0a;
+  // 팝오버
+  popover: #ffffff,
+  popover-foreground: #0a0a0a,
 
-// Primary (검은색 계열)
-$color-primary: #171717;
-$color-primary-foreground: #fafafa;
+  // Primary (검은색 계열)
+  primary: #3b82f6,
+  primary-foreground: #fafafa,
 
-// Secondary (회색 계열)
-$color-secondary: #f5f5f5;
-$color-secondary-foreground: #171717;
+  // Secondary (회색 계열)
+  secondary: #f5f5f5,
+  secondary-foreground: #171717,
 
-// Muted (회색 계열)
-$color-muted: #f5f5f5;
-$color-muted-foreground: #737373;
+  // Muted (회색 계열)
+  muted: #f5f5f5,
+  muted-foreground: #737373,
 
-// Accent
-$color-accent: #f5f5f5;
-$color-accent-foreground: #171717;
+  // Accent
+  accent: #f5f5f5,
+  accent-foreground: #171717,
 
-// Destructive (빨강)
-$color-destructive: #ef4444;
-$color-destructive-foreground: #fafafa;
+  // Destructive (빨강)
+  destructive: #ef4444,
+  destructive-foreground: #fafafa,
 
-// Border & Input
-$color-border: #e5e5e5;
-$color-input: #e5e5e5;
-$color-ring: #a3a3a3;
+  // Border & Input
+  border: #e5e5e5,
+  input: #e5e5e5,
+  ring: #a3a3a3,
 
-// Text Colors
-$color-text-primary: #0a0a0a;
-$color-text-secondary: #737373;
+  // Text Colors
+  text-primary: #0a0a0a,
+  text-secondary: #737373,
 
-// Error
-$color-error: #ef4444;
+  // Error
+  error: #ef4444
+);
 
 // ============================================
 // Dark Mode 색상
 // ============================================
 
-$color-dark-background: #0a0a0a;
-$color-dark-foreground: #fafafa;
-$color-dark-card: #171717;
-$color-dark-card-foreground: #fafafa;
-$color-dark-popover: #171717;
-$color-dark-popover-foreground: #fafafa;
-$color-dark-primary: #e5e5e5;
-$color-dark-primary-foreground: #171717;
-$color-dark-secondary: #262626;
-$color-dark-secondary-foreground: #fafafa;
-$color-dark-muted: #262626;
-$color-dark-muted-foreground: #a3a3a3;
-$color-dark-accent: #262626;
-$color-dark-accent-foreground: #fafafa;
-$color-dark-destructive: #dc2626;
-$color-dark-border: rgba(255, 255, 255, 0.1);
-$color-dark-input: rgba(255, 255, 255, 0.15);
-$color-dark-ring: #737373;
+$dark: (
+  // 기본 색상
+  background: #0a0a0a,
+  foreground: #fafafa,
+
+  // 카드
+  card: #171717,
+  card-foreground: #fafafa,
+
+  // 팝오버
+  popover: #171717,
+  popover-foreground: #fafafa,
+
+  // Primary (검은색 계열)
+  primary: #e5e5e5,
+  primary-foreground: #171717,
+
+  // Secondary (회색 계열)
+  secondary: #262626,
+  secondary-foreground: #fafafa,
+
+  // Muted (회색 계열)
+  muted: #262626,
+  muted-foreground: #a3a3a3,
+
+  // Accent
+  accent: #262626,
+  accent-foreground: #fafafa,
+
+  // Destructive (빨강)
+  destructive: #dc2626,
+
+  // Border & Input
+  border: rgba(255, 255, 255, 0.1),
+  input: rgba(255, 255, 255, 0.15),
+  ring: #737373
+);
+
+:root {
+  @each $name, $value in $light {
+    --#{'' + $name}: #{$value};
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root,
+  html[data-theme="dark"] {
+    @each $name, $value in $dark {
+      --#{'' + $name}: #{$value};
+    }
+  }
+}
 
 // ============================================
 // Spacing (Tailwind 기준)
 // ============================================
 
 $spacing-0: 0;
-$spacing-1: 0.25rem;   // 4px
-$spacing-2: 0.5rem;    // 8px
-$spacing-3: 0.75rem;   // 12px
-$spacing-4: 1rem;      // 16px
-$spacing-5: 1.25rem;   // 20px
-$spacing-6: 1.5rem;    // 24px
-$spacing-8: 2rem;      // 32px
-$spacing-10: 2.5rem;   // 40px
-$spacing-12: 3rem;     // 48px
-$spacing-16: 4rem;     // 64px
-$spacing-20: 5rem;     // 80px
-$spacing-24: 6rem;     // 96px
+$spacing-1: 0.25rem; // 4px
+$spacing-2: 0.5rem; // 8px
+$spacing-3: 0.75rem; // 12px
+$spacing-4: 1rem; // 16px
+$spacing-5: 1.25rem; // 20px
+$spacing-6: 1.5rem; // 24px
+$spacing-8: 2rem; // 32px
+$spacing-10: 2.5rem; // 40px
+$spacing-12: 3rem; // 48px
+$spacing-16: 4rem; // 64px
+$spacing-20: 5rem; // 80px
+$spacing-24: 6rem; // 96px
 
 // ============================================
 // Font Size
 // ============================================
 
-$font-xs: 0.75rem;     // 12px
-$font-sm: 0.875rem;    // 14px
-$font-base: 1rem;      // 16px
-$font-md: 1rem;        // 16px (alias for base)
-$font-lg: 1.125rem;    // 18px
-$font-xl: 1.25rem;     // 20px
-$font-2xl: 1.5rem;     // 24px
-$font-3xl: 1.875rem;   // 30px
-$font-4xl: 2.25rem;    // 36px
-$font-5xl: 3rem;       // 48px
+$font-xs: 0.75rem; // 12px
+$font-sm: 0.875rem; // 14px
+$font-base: 1rem; // 16px
+$font-md: 1rem; // 16px (alias for base)
+$font-lg: 1.125rem; // 18px
+$font-xl: 1.25rem; // 20px
+$font-2xl: 1.5rem; // 24px
+$font-3xl: 1.875rem; // 30px
+$font-4xl: 2.25rem; // 36px
+$font-5xl: 3rem; // 48px
 
 // ============================================
 // Font Weight
@@ -115,11 +202,11 @@ $font-bold: 700;
 // Border Radius
 // ============================================
 
-$radius: 0.625rem;     // 10px
-$radius-sm: 0.375rem;  // 6px
-$radius-md: 0.5rem;    // 8px
-$radius-lg: 0.75rem;   // 12px
-$radius-xl: 1rem;      // 16px
+$radius: 0.625rem; // 10px
+$radius-sm: 0.375rem; // 6px
+$radius-md: 0.5rem; // 8px
+$radius-lg: 0.75rem; // 12px
+$radius-xl: 1rem; // 16px
 $radius-full: 9999px;
 
 // ============================================

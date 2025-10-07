@@ -9,10 +9,6 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-/**
- * 전역 레이아웃 래퍼
- * Header + 메인 컨텐츠 + Footer 구조
- */
 export function Layout({ children }: LayoutProps) {
   return (
     <div className={styles.layout}>

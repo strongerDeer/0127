@@ -1,4 +1,17 @@
-import { Check, ChevronLeft, ChevronRight, Image, LogIn, LogOut, Menu, Plus, Search, User, X } from 'lucide-react';
+import {
+  Check,
+  ChevronLeft,
+  ChevronRight,
+  Home,
+  Image,
+  LogIn,
+  LogOut,
+  Menu,
+  Plus,
+  Search,
+  User,
+  X,
+} from 'lucide-react';
 
 export type IconName =
   | 'image'
@@ -10,8 +23,9 @@ export type IconName =
   | 'search'
   | 'plus'
   | 'check'
-  | 'chevron-right'
-  | 'chevron-left';
+  | 'right'
+  | 'left'
+  | 'home';
 
 interface IconProps {
   name: IconName;
@@ -30,8 +44,9 @@ const iconMap = {
   search: Search,
   plus: Plus,
   check: Check,
-  'chevron-right': ChevronRight,
-  'chevron-left': ChevronLeft,
+  right: ChevronRight,
+  left: ChevronLeft,
+  home: Home,
 };
 
 /**

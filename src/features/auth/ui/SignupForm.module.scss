@@ -18,7 +18,7 @@
   }
 
   p {
-    color: $color-muted-foreground;
+    color: var(--muted-foreground);
 
     strong {
       font-weight: $font-semibold;
@@ -54,7 +54,7 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  background-color: $color-primary;
+  background-color: var(--primary);
   color: white;
   cursor: pointer;
   transition: all 0.2s;
@@ -64,7 +64,7 @@
 
   &:hover {
     transform: scale(1.1);
-    background-color: color.adjust($color-primary, $lightness: -10%);
+    // background-color: color.adjust(var(--primary), $lightness: -10%);
   }
 
   &:active {
@@ -99,7 +99,7 @@
 
 .error {
   font-size: $font-sm;
-  color: $color-destructive;
+  color: var(--destructive);
 }
 
 .success {
@@ -122,8 +122,8 @@
   height: 40px;
   width: 100%;
   border-radius: $radius-md;
-  border: 1px solid $color-border;
-  background-color: $color-background;
+  border: 1px solid var(--border);
+  background-color: var(--background);
   padding: $spacing-2 $spacing-3;
   font-size: $font-sm;
 
@@ -161,21 +161,21 @@
     justify-content: center;
     height: 40px;
     padding: $spacing-2 $spacing-3;
-    border: 1px solid $color-border;
+    border: 1px solid var(--border);
     border-radius: $radius-md;
-    background-color: $color-background;
+    background-color: var(--background);
     font-size: $font-sm;
     transition: all 0.2s;
 
     &:hover {
-      border-color: $color-primary;
+      border-color: var(--primary);
     }
   }
 
   input[type="radio"]:checked + span {
-    background-color: $color-primary;
+    background-color: var(--primary);
     color: white;
-    border-color: $color-primary;
+    border-color: var(--primary);
   }
 
   input[type="radio"]:disabled + span {

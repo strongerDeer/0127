@@ -1,0 +1,49 @@
+@use "tailwindcss";
+@use "@/shared/styles/variables.scss" as *;
+
+/* 버튼 */
+.btnsWrap {
+  display: flex;
+  gap: $gap;
+  & > * {
+    flex: 1 1 0;
+  }
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4em;
+  min-width: 8em;
+  height: $formHeight;
+  padding: 0 1em;
+
+  svg {
+    width: 1.2em;
+    height: 1.2em;
+  }
+
+  border: 1px solid var(--border);
+  border-radius: $borderRadius;
+  background-color: var(--surface);
+
+  font-size: 1em;
+  transition: $transition;
+
+  &:hover {
+    background-color: var(--primary-light);
+    border-color: var(--primary-light);
+  }
+
+  &.solid {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: var(--primary-text);
+
+    &:hover {
+      background-color: var(--primary-dark);
+      border-color: var(--primary-dark);
+    }
+  }
+}
