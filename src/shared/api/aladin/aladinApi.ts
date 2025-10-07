@@ -1,31 +1,22 @@
 import type { AladinBook, AladinSearchParams, AladinSearchResponse } from '@/shared/types/aladin';
 import { AladinApiError } from '@/shared/types/aladin';
 
-const ALADIN_API_BASE_URL = 'http://www.aladin.co.kr/ttb/api/ItemSearch.aspx';
-
 /**
- * Aladin API 도서 검색
+ * Aladin API 도서 검색 (Next.js API Route 사용)
  */
 export async function searchBooks(params: AladinSearchParams): Promise<AladinBook[]> {
   try {
-    const apiKey = process.env.NEXT_PUBLIC_ALADIN_API_KEY;
-
-    if (!apiKey) {
-      throw new AladinApiError('Aladin API Key가 설정되지 않았습니다.');
-    }
-
     const searchParams = new URLSearchParams({
-      ttbkey: apiKey,
-      Query: params.query,
-      QueryType: params.queryType || 'Keyword',
-      MaxResults: String(params.maxResults || 10),
+      query: params.query,
+      queryType: params.queryType || 'Keyword',
+      maxResults: String(params.maxResults || 10),
       start: String(params.start || 1),
-      SearchTarget: params.searchTarget || 'Book',
-      output: params.output || 'js',
-      Version: params.version || '20131101',
+      searchTarget: params.searchTarget || 'Book',
     });
 
-    const url = `${ALADIN_API_BASE_URL}?${searchParams.toString()}`;
+    const url = `/api/aladin/search?${searchParams.toString()}`;
+
+    console.log('[Aladin Client] 도서 검색 요청:', { query: params.query, url });
 
     const response = await fetch(url, {
       method: 'GET',
@@ -35,18 +26,25 @@ export async function searchBooks(params: AladinSearchParams): Promise<AladinBoo
     });
 
     if (!response.ok) {
-      throw new AladinApiError(`API 요청 실패: ${response.statusText}`, response.status);
+      const errorData = await response.json().catch(() => ({ error: response.statusText }));
+      console.error('[Aladin Client] API 요청 실패:', errorData);
+      throw new AladinApiError(errorData.error || `API 요청 실패: ${response.statusText}`, response.status);
     }
 
     const data: AladinSearchResponse = await response.json();
 
+    console.log('[Aladin Client] 검색 성공:', data.item?.length || 0, '건');
+
     return data.item || [];
   } catch (error) {
+    console.error('[Aladin Client] 예외 발생:', error);
+
     if (error instanceof AladinApiError) {
       throw error;
     }
 
-    throw new AladinApiError('도서 검색 중 오류가 발생했습니다.');
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    throw new AladinApiError(`도서 검색 중 오류가 발생했습니다. (${errorMessage})`);
   }
 }
 
